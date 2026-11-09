@@ -1,0 +1,48 @@
+// =============================================================================
+// The Valley Indian - Design System Variables & Design Tokens
+// Prepared for WordPress Block Theme integration (theme.json)
+// =============================================================================
+
+// Colors
+$color-ink: #183c39;
+$color-ink-hover: #285b54;
+$color-muted: #63706a;
+$color-paper: #f8f6ef;
+$color-orange: #ba4c2c;
+$color-line: #d9ddd3;
+$color-line-hover: #e5e9de;
+$color-gold: #e5b876;
+$color-gold-light: #f9e4af;
+$color-notice-bg: #efe7d3;
+$color-notice-border: #be7c3d;
+$color-tag-bg: #ede2cb;
+$color-review-bg: #eef0e7;
+$color-sponsor-bg: #ecebdf;
+$color-card-bg: #fffdf7;
+$color-input-bg: #fffef9;
+$color-input-border: #bdc8bd;
+$color-focus-outline: #d98a50;
+$color-modal-backdrop: #102e2bcc;
+
+// Typography
+$font-serif: Georgia, serif;
+$font-sans: Arial, sans-serif;
+
+$font-size-masthead: 48px;
+$font-size-h1: 43px;
+$font-size-h2: 27px;
+$font-size-h3: 23px;
+$font-size-body: 15px;
+$font-size-card-body: 13px;
+$font-size-meta: 10px;
+$font-size-eyebrow: 10px;
+
+// Dimensions
+$container-max-width: 1240px;
+$content-max-width: 740px;
+$form-max-width: 680px;
+$modal-max-width: 760px;
+$radius-base: 3px;
+
+// Breakpoint
+$breakpoint-mobile: 760px;

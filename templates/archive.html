@@ -1,0 +1,37 @@
+<div class="prototype">PRIVATE PROTOTYPE · Sample stories, illustrative events &amp; listings · Saved in this browser only</div>
+
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"default"}} -->
+<main class="site-main">
+  <div class="page-title">
+    <!-- wp:query-title {"type":"archive","className":"archive-title"} /-->
+    <!-- wp:term-description {"className":"muted"} /-->
+  </div>
+
+  <!-- wp:query {"queryId":6,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"className":"cards"} -->
+      <article class="card wp-block-post">
+        <div class="card-eyebrows">
+          <!-- wp:post-terms {"term":"category","className":"eyebrow"} /-->
+          <span class="eyebrow-sep">·</span>
+          <!-- wp:post-terms {"term":"area","className":"eyebrow"} /-->
+        </div>
+        <!-- wp:post-title {"level":3,"isLink":true,"className":"wp-block-post-title"} /-->
+        <!-- wp:post-excerpt {"moreText":"Read story ↗","className":"muted"} /-->
+        <div class="meta">SAMPLE CONTENT · Original</div>
+      </article>
+    <!-- /wp:post-template -->
+
+    <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+      <!-- wp:query-pagination-previous /-->
+      <!-- wp:query-pagination-numbers /-->
+      <!-- wp:query-pagination-next /-->
+    <!-- /wp:query-pagination -->
+  </div>
+  <!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->

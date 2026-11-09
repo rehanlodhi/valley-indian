@@ -1,0 +1,22 @@
+// =============================================================================
+// Notices & Disclaimers
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+
+.prototype {
+  background: var(--ink);
+  color: white;
+  text-align: center;
+  padding: 7px;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+}
+
+.notice {
+  padding: 14px 18px;
+  background: #efe7d3;
+  border-left: 3px solid #be7c3d;
+  font-size: 13px;
+  margin: 20px 0;
+}

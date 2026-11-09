@@ -1,0 +1,10 @@
+// =============================================================================
+// Helper Functions
+// =============================================================================
+
+@use "sass:math";
+
+// Convert pixel values to rem units (assumes 16px default browser font)
+@function rem($px, $base: 16px) {
+  @return math.div($px, $base) * 1rem;
+}

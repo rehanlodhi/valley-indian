@@ -1,0 +1,43 @@
+// =============================================================================
+// Typography Styles
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, serif;
+  line-height: 1.13;
+  font-weight: normal;
+}
+
+h1 {
+  font-size: 43px;
+  letter-spacing: -1px;
+  margin: 15px 0;
+
+  @include m.mobile {
+    font-size: 34px;
+  }
+}
+
+h2 {
+  font-size: 27px;
+  margin: 10px 0;
+}
+
+h3 {
+  font-size: 23px;
+  margin: 10px 0;
+}
+
+p {
+  margin: 10px 0;
+}
+
+.muted,
+small {
+  color: var(--muted);
+}

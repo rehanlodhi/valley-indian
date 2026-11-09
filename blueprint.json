@@ -1,0 +1,42 @@
+{
+  "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+  "landingPage": "/",
+  "preferredVersions": {
+    "php": "8.3",
+    "wp": "latest"
+  },
+  "phpExtensionBundles": [
+    "kitchen-sink"
+  ],
+  "features": {
+    "networking": true
+  },
+  "steps": [
+    {
+      "step": "login",
+      "username": "admin",
+      "password": "password"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "blogname": "The Valley Indian",
+        "blogdescription": "OUR COMMUNITY. OUR STORIES. OUR VALLEY.",
+        "permalink_structure": "/%postname%/",
+        "show_on_front": "posts"
+      }
+    },
+    {
+      "step": "installTheme",
+      "themeData": {
+        "resource": "git:directory",
+        "url": "https://github.com/rehanlodhi/valley-indian",
+        "ref": "main"
+      },
+      "options": {
+        "activate": true,
+        "targetFolderName": "valley-indian"
+      }
+    }
+  ]
+}

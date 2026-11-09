@@ -1,0 +1,102 @@
+// =============================================================================
+// Layout Grids & Structural Containers
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+.sectionhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.75fr 1fr;
+  gap: 30px;
+
+  @include m.mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lead {
+  border-right: 1px solid var(--line);
+  padding-right: 30px;
+
+  @include m.mobile {
+    padding: 0;
+    border: 0;
+  }
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 35px;
+  margin-top: 30px;
+
+  @include m.mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.page-title {
+  max-width: 740px;
+  margin-bottom: 25px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  .card {
+    padding: 15px;
+  }
+
+  strong {
+    font: 30px Georgia, serif;
+    display: block;
+  }
+
+  @include m.mobile {
+    gap: 6px;
+
+    .card {
+      padding: 9px;
+      font-size: 11px;
+    }
+  }
+}
+
+.queue {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  @include m.mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.review {
+  margin-top: 15px;
+  padding: 14px;
+  background: #eef0e7;
+
+  label {
+    font-weight: normal;
+    margin: 7px 0;
+    display: block;
+  }
+
+  input {
+    width: auto;
+    margin: 0 7px 0 0;
+  }
+}

@@ -1,0 +1,28 @@
+// =============================================================================
+// Tables Component
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+
+  td,
+  th {
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    padding: 13px;
+  }
+
+  @include m.mobile {
+    font-size: 11px;
+
+    td,
+    th {
+      padding: 8px;
+    }
+  }
+}

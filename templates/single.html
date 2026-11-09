@@ -1,0 +1,46 @@
+<div class="prototype">PRIVATE PROTOTYPE · Sample stories, illustrative events &amp; listings · Saved in this browser only</div>
+
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"default"}} -->
+<main class="site-main">
+  <!-- wp:group {"tagName":"article","className":"single-article"} -->
+  <article class="single-article wp-block-post">
+    <header class="article-header">
+      <div class="card-eyebrows">
+        <!-- wp:post-terms {"term":"category","className":"eyebrow"} /-->
+        <span class="eyebrow-sep">·</span>
+        <!-- wp:post-terms {"term":"area","className":"eyebrow"} /-->
+      </div>
+      <!-- wp:post-title {"level":1,"className":"wp-block-post-title"} /-->
+      <div class="meta wp-block-post-date">
+        <!-- wp:post-date /--> · <!-- wp:post-author-name /-->
+      </div>
+    </header>
+
+    <!-- wp:post-featured-image {"className":"art"} /-->
+
+    <!-- wp:post-content {"className":"article-body"} /-->
+
+    <!-- wp:comments {"className":"comments-section"} -->
+    <section class="comments-section wp-block-comments" aria-label="Comments">
+      <h2>Community conversation</h2>
+      <p class="muted">Comments appear only after editor approval.</p>
+
+      <!-- wp:comment-template {"className":"comments-list"} -->
+        <!-- wp:comment-author-name /-->
+        <!-- wp:comment-date /-->
+        <!-- wp:comment-content /-->
+      <!-- /wp:comment-template -->
+
+      <!-- wp:comments-pagination /-->
+
+      <!-- wp:post-comments-form /-->
+    </section>
+    <!-- /wp:comments -->
+  </article>
+  <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->

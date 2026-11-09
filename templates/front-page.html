@@ -1,0 +1,59 @@
+<div class="prototype">PRIVATE PROTOTYPE · Sample stories, illustrative events &amp; listings · Saved in this browser only</div>
+
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"default"}} -->
+<main id="app" class="wp-block-group site-main">
+  <div class="sectionhead">
+    <span class="eyebrow">The community edition</span>
+    <small>Las Vegas · Henderson · North Las Vegas · Beyond</small>
+  </div>
+
+  <!-- wp:pattern {"slug":"valley-indian/hero"} /-->
+
+  <!-- wp:pattern {"slug":"valley-indian/sponsor-banner"} /-->
+
+  <!-- wp:group {"className":"columns","layout":{"type":"default"}} -->
+  <div class="wp-block-group columns">
+    <section aria-label="More from the community">
+      <div class="sectionhead">
+        <h2>More from the community</h2>
+        <span class="eyebrow">People &amp; perspectives</span>
+      </div>
+
+      <!-- wp:query {"queryId":5,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"asc","orderBy":"date","author":"","search":"","exclude":[6],"sticky":"","inherit":false}} -->
+      <div class="wp-block-query">
+        <!-- wp:post-template {"className":"cards"} -->
+          <!-- wp:group {"tagName":"article","className":"card","layout":{"type":"default"}} -->
+          <article class="wp-block-group card">
+            <!-- wp:group {"className":"card-eyebrows","layout":{"type":"flex","flexWrap":"nowrap"}} -->
+            <div class="wp-block-group card-eyebrows">
+              <!-- wp:post-terms {"term":"category","className":"eyebrow"} /-->
+              <!-- wp:paragraph {"className":"eyebrow-sep"} -->
+              <p class="eyebrow-sep">·</p>
+              <!-- /wp:paragraph -->
+              <!-- wp:post-terms {"term":"area","className":"eyebrow"} /-->
+            </div>
+            <!-- /wp:group -->
+            <!-- wp:post-title {"level":3,"isLink":true,"className":"wp-block-post-title"} /-->
+            <!-- wp:post-excerpt {"moreText":"Read story ↗","className":"muted"} /-->
+            <!-- wp:paragraph {"className":"meta"} -->
+            <p class="meta">SAMPLE CONTENT · Original</p>
+            <!-- /wp:paragraph -->
+          </article>
+          <!-- /wp:group -->
+        <!-- /wp:post-template -->
+      </div>
+      <!-- /wp:query -->
+    </section>
+
+    <aside aria-label="The Valley Brief and Calendar">
+      <!-- wp:pattern {"slug":"valley-indian/newsletter"} /-->
+      <!-- wp:pattern {"slug":"valley-indian/events-list"} /-->
+    </aside>
+  </div>
+  <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->

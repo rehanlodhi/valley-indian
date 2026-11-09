@@ -1,0 +1,59 @@
+// =============================================================================
+// Badges, Tags, Eyebrows & Branding Seal
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 1.6px;
+  color: var(--orange);
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.meta {
+  font-size: 10px;
+  letter-spacing: 0.3px;
+  color: var(--muted);
+  margin: 12px 0;
+}
+
+.tag {
+  background: var(--tag-bg, #{v.$color-tag-bg});
+  border-radius: 3px;
+  font-size: 10px;
+  padding: 4px 8px;
+  display: inline-block;
+  color: var(--ink);
+  font-weight: normal;
+}
+
+.seal {
+  background: var(--orange);
+  color: white;
+  width: 59px;
+  height: 65px;
+  text-align: center;
+  font: 31px v.$font-serif;
+  padding-top: 8px;
+  flex-shrink: 0;
+
+  span {
+    display: block;
+    font: 7px Arial, sans-serif;
+    letter-spacing: 1px;
+  }
+
+  @include m.mobile {
+    width: 45px;
+    height: 55px;
+    font-size: 25px;
+  }
+}
+
+.dot {
+  color: var(--orange);
+}

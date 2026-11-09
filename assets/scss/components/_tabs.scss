@@ -1,0 +1,17 @@
+// =============================================================================
+// Tabs Component
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+
+  .active {
+    background: var(--ink);
+    color: white;
+  }
+}

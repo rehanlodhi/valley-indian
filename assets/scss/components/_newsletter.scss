@@ -1,0 +1,27 @@
+// =============================================================================
+// Newsletter Component ("The Valley Brief")
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+
+.newsletter {
+  padding: 26px;
+  background: var(--ink);
+  color: white;
+
+  p {
+    font-size: 13px;
+  }
+
+  input {
+    background: #fff;
+    color: var(--ink);
+  }
+
+  button,
+  .btn {
+    background: #e5b876;
+    border: 0;
+    width: 100%;
+  }
+}

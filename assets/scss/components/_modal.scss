@@ -1,0 +1,32 @@
+// =============================================================================
+// Dialog Modal Component (Single Story Reader)
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+
+dialog {
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  max-width: 760px;
+  width: 92%;
+  max-height: 90vh;
+  padding: 30px;
+
+  &::backdrop {
+    background: #102e2bcc;
+  }
+
+  h1 {
+    font-size: 35px;
+  }
+}
+
+.close {
+  float: right;
+}
+
+.comment {
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+}

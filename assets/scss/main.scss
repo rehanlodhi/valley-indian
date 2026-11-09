@@ -1,0 +1,54 @@
+/*!
+Theme Name: The Valley Indian
+Theme URI: https://valleyindian.com
+Author: The Valley Indian Team
+Description: A refined editorial community news theme for Clark County Indian Community, built with modern semantic HTML and SCSS design system for WordPress Full Site Editing (FSE).
+Version: 1.0.0
+Requires at least: 6.2
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: valley-indian
+Tags: news, blog, community, grid-layout, custom-colors, block-patterns, full-site-editing
+*/
+
+// =============================================================================
+// The Valley Indian - Master SCSS Stylesheet
+// Ready for Plain HTML & WordPress Block Theme (FSE)
+// =============================================================================
+
+// Abstracts (Variables, Tokens, Functions, Mixins)
+@use "abstracts/variables";
+@use "abstracts/wp-tokens";
+@use "abstracts/functions";
+@use "abstracts/mixins";
+
+// Base (Reset, Typography, Container)
+@use "base/reset";
+@use "base/typography";
+@use "base/base";
+
+// Components
+@use "components/buttons";
+@use "components/badges-tags";
+@use "components/cards";
+@use "components/forms";
+@use "components/events";
+@use "components/sponsor";
+@use "components/newsletter";
+@use "components/editorial-art";
+@use "components/notice";
+@use "components/table";
+@use "components/tabs";
+@use "components/modal";
+@use "components/toast";
+
+// Layout
+@use "layout/header";
+@use "layout/footer";
+@use "layout/grid";
+
+// Pages
+@use "pages/single";
+@use "pages/desk";

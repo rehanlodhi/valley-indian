@@ -1,0 +1,71 @@
+// =============================================================================
+// Single Article Page Template Styles
+// Prepared for WordPress single.html template
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+.single-article {
+  max-width: v.$content-max-width;
+  margin: 0 auto 50px;
+
+  .article-header {
+    margin-bottom: 25px;
+
+    h1 {
+      margin-top: 10px;
+      margin-bottom: 15px;
+    }
+  }
+
+  .article-meta {
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 25px;
+  }
+
+  .article-lead {
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .article-body {
+    font-size: 16px;
+    line-height: 1.7;
+
+    p {
+      margin-bottom: 18px;
+    }
+  }
+
+  .source-link-box {
+    margin: 25px 0;
+    padding: 14px 18px;
+    background: var(--review-bg, #{v.$color-review-bg});
+    border-radius: v.$radius-base;
+    font-size: 13px;
+
+    a {
+      color: var(--orange);
+      font-weight: bold;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .comments-section {
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+
+    h2 {
+      margin-bottom: 8px;
+    }
+  }
+}

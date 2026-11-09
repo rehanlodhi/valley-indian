@@ -1,0 +1,66 @@
+// =============================================================================
+// Buttons Component
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+button,
+.btn {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  padding: 9px 15px;
+  border-radius: 3px;
+  font: inherit;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+
+  &:hover {
+    background: #e5e9de;
+  }
+}
+
+.primary,
+.btn-primary {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+
+  &:hover {
+    background: #285b54;
+    color: white;
+  }
+}
+
+.read,
+.btn-read {
+  padding: 0;
+  border: 0;
+  color: var(--orange);
+  font-weight: bold;
+  font-size: 12px;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: transparent;
+  }
+}
+
+.close,
+.btn-close {
+  float: right;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 15px;
+}

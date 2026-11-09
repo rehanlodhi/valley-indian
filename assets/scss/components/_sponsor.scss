@@ -1,0 +1,35 @@
+// =============================================================================
+// Sponsor & Advertising Callout
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+.sponsor {
+  margin: 25px 0;
+  padding: 18px 24px;
+  background: #ecebdf;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  border: 1px solid var(--line);
+
+  p {
+    font: 22px Georgia, serif;
+    margin: 3px 0;
+  }
+
+  button,
+  .btn {
+    margin-left: auto;
+  }
+
+  @include m.mobile {
+    gap: 10px;
+    flex-wrap: wrap;
+
+    p {
+      font-size: 19px;
+    }
+  }
+}

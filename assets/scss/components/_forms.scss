@@ -1,0 +1,49 @@
+// =============================================================================
+// Form Controls & Search Components
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #bdc8bd;
+  background: #fffef9;
+  padding: 11px;
+  border-radius: 3px;
+  margin: 5px 0 13px;
+  color: var(--ink);
+}
+
+textarea {
+  min-height: 100px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.form {
+  max-width: 680px;
+}
+
+.searchrow {
+  display: flex;
+  gap: 14px;
+
+  input {
+    flex: 2;
+  }
+
+  select {
+    flex: 1;
+  }
+
+  @include m.mobile {
+    display: block;
+  }
+}

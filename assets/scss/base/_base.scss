@@ -1,0 +1,57 @@
+// =============================================================================
+// Base Layout Container
+// =============================================================================
+
+@use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
+
+header,
+main,
+footer,
+.site-container {
+  max-width: 1240px;
+  margin: auto;
+  padding: 0 32px;
+
+  @include m.mobile {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+main {
+  min-height: 65vh;
+  padding-top: 25px;
+  padding-bottom: 55px;
+}
+
+// Reset WP core post template list styling
+ul.wp-block-post-template {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Full bleed prototype bar
+.prototype {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  background: var(--ink);
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  padding: 7px 14px;
+  letter-spacing: 0.5px;
+}
+
+// Hide skip link cleanly when not focused (standard accessibility technique)
+.screen-reader-text:not(:focus) {
+  position: absolute !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden !important;
+}

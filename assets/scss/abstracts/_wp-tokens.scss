@@ -1,0 +1,53 @@
+// =============================================================================
+// WordPress Block Theme Token Bridge
+// Bridges SCSS variables with standard CSS Custom Properties and WordPress presets
+// =============================================================================
+
+@use "variables" as v;
+
+:root {
+  // Standard CSS Tokens (Matching Original Prototype)
+  --ink: #{v.$color-ink};
+  --ink-hover: #{v.$color-ink-hover};
+  --muted: #{v.$color-muted};
+  --paper: #{v.$color-paper};
+  --orange: #{v.$color-orange};
+  --line: #{v.$color-line};
+  --line-hover: #{v.$color-line-hover};
+  --gold: #{v.$color-gold};
+  --gold-light: #{v.$color-gold-light};
+  --notice-bg: #{v.$color-notice-bg};
+  --notice-border: #{v.$color-notice-border};
+  --tag-bg: #{v.$color-tag-bg};
+  --review-bg: #{v.$color-review-bg};
+  --sponsor-bg: #{v.$color-sponsor-bg};
+  --card-bg: #{v.$color-card-bg};
+  --input-bg: #{v.$color-input-bg};
+  --input-border: #{v.$color-input-border};
+  --focus-outline: #{v.$color-focus-outline};
+
+  // WordPress Block Theme FSE Preset Mappings
+  --wp--preset--color--ink: var(--ink);
+  --wp--preset--color--paper: var(--paper);
+  --wp--preset--color--muted: var(--muted);
+  --wp--preset--color--orange: var(--orange);
+  --wp--preset--color--line: var(--line);
+  --wp--preset--color--gold: var(--gold);
+  --wp--preset--color--card-bg: var(--card-bg);
+  --wp--preset--color--sponsor-bg: var(--sponsor-bg);
+
+  --wp--preset--font-family--serif: #{v.$font-serif};
+  --wp--preset--font-family--sans-serif: #{v.$font-sans};
+
+  --wp--preset--font-size--masthead: #{v.$font-size-masthead};
+  --wp--preset--font-size--h1: #{v.$font-size-h1};
+  --wp--preset--font-size--h2: #{v.$font-size-h2};
+  --wp--preset--font-size--h3: #{v.$font-size-h3};
+  --wp--preset--font-size--body: #{v.$font-size-body};
+  --wp--preset--font-size--card-body: #{v.$font-size-card-body};
+  --wp--preset--font-size--meta: #{v.$font-size-meta};
+  --wp--preset--font-size--eyebrow: #{v.$font-size-eyebrow};
+
+  --wp--custom--layout--content-size: #{v.$content-max-width};
+  --wp--custom--layout--wide-size: #{v.$container-max-width};
+}

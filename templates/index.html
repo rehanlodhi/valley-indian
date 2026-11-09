@@ -1,0 +1,35 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"default"}} -->
+<main class="site-main">
+  <div class="sectionhead">
+    <span class="eyebrow">The community edition</span>
+    <small>Las Vegas · Henderson · North Las Vegas · Beyond</small>
+  </div>
+
+  <!-- wp:query {"queryId":1,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
+  <div class="wp-block-query">
+    <!-- wp:post-template {"className":"cards"} -->
+      <!-- wp:group {"tagName":"article","className":"card wp-block-post"} -->
+      <article class="card wp-block-post">
+        <!-- wp:post-terms {"term":"category","className":"eyebrow"} /-->
+        <!-- wp:post-title {"isLink":true,"className":"wp-block-post-title"} /-->
+        <!-- wp:post-excerpt {"moreText":"Read story ↗","className":"muted wp-block-post-excerpt"} /-->
+        <div class="meta">
+          <!-- wp:post-date /-->
+        </div>
+      </article>
+      <!-- /wp:group -->
+    <!-- /wp:post-template -->
+
+    <!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+      <!-- wp:query-pagination-previous /-->
+      <!-- wp:query-pagination-numbers /-->
+      <!-- wp:query-pagination-next /-->
+    <!-- /wp:query-pagination -->
+  </div>
+  <!-- /wp:query -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
