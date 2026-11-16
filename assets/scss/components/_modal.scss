@@ -1,32 +1,38 @@
 // =============================================================================
-// Dialog Modal Component (Single Story Reader)
+// Dialog Modal & Comments Styling
 // =============================================================================
 
 @use "../abstracts/variables" as v;
+@use "../abstracts/mixins" as m;
 
 dialog {
-  border: 0;
-  background: var(--paper);
-  color: var(--ink);
-  max-width: 760px;
-  width: 92%;
+  width: min(800px, 94vw);
   max-height: 90vh;
-  padding: 30px;
+  padding: 35px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--cream);
+  color: var(--ink);
 
   &::backdrop {
-    background: #102e2bcc;
+    background: rgba(0, 0, 0, 0.6);
   }
 
   h1 {
-    font-size: 35px;
+    font-size: 38px;
+    margin-top: 15px;
+  }
+
+  @include m.mobile {
+    padding: 22px;
+
+    h1 {
+      font-size: 30px;
+    }
   }
 }
 
-.close {
-  float: right;
-}
-
 .comment {
-  padding: 12px;
+  padding: 15px;
   border-bottom: 1px solid var(--line);
 }

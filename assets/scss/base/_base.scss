@@ -1,52 +1,119 @@
 // =============================================================================
-// Base Layout Container
+// Base Layout Containers & Global Mode Banner
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
-header,
-main,
-footer,
-.site-container {
-  max-width: 1240px;
-  margin: auto;
-  padding: 0 32px;
+// Restore natural margins inside WordPress layout-flow wrappers (beats `:root :where(.is-layout-flow) > *`)
+// Uses :where() for exclusions so specificity stays at (0,1,1) / (0,2,0) and component rules always win.
+.wp-block-group.site-main,
+main.site-main.is-layout-flow,
+.is-layout-flow:where(:not(.card):not(.page-title):not(.lead):not(.brief):not(.event):not(.calendar-widget):not(.newsletter):not(.ad)) {
+  > p:where(:not(.tag):not(.eyebrow):not(.eyebrow-sep):not(.meta)) {
+    margin: 10px 0 20px;
+  }
 
-  @include m.mobile {
-    padding-left: 18px;
-    padding-right: 18px;
+  > h1,
+  > h2,
+  > h3 {
+    margin: 0 0 16px;
+  }
+
+  > .sectionhead {
+    margin: 0 0 22px;
+  }
+
+  > .page-title {
+    margin: 10px 0 28px;
+  }
+
+  > .searchrow,
+  > .tabs,
+  > .actions,
+  > .notice,
+  > p.notice {
+    margin: 20px 0;
+  }
+
+  > .ad {
+    margin: 34px 0;
+  }
+
+  > .top-ad {
+    margin: 0 0 24px;
+  }
+
+  > .ad-slot {
+    margin: 36px 0;
+
+    @include m.mobile {
+      margin: 28px 0;
+    }
+  }
+
+  > .ad-slot-article {
+    margin: 32px 0;
+  }
+
+  > .columns {
+    margin-top: 35px;
+    margin-bottom: 0;
   }
 }
 
-main {
-  min-height: 65vh;
-  padding-top: 25px;
-  padding-bottom: 55px;
+.wp-site-blocks {
+  > main,
+  main.site-main,
+  main#app {
+    max-width: v.$container-max-width;
+    margin: auto;
+    padding: 34px 28px 60px;
+    min-height: 60vh;
+
+    @include m.mobile {
+      padding: 25px 18px;
+    }
+  }
 }
 
-// Reset WP core post template list styling
+main.site-main,
+main#app {
+  max-width: v.$container-max-width;
+  margin: auto;
+  padding: 34px 28px 60px;
+  min-height: 60vh;
+
+  @include m.mobile {
+    padding: 25px 18px;
+  }
+}
+
 ul.wp-block-post-template {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-// Full bleed prototype bar
+.mode,
 .prototype {
   width: 100%;
   box-sizing: border-box;
   margin: 0;
-  background: var(--ink);
-  color: #fff;
   text-align: center;
-  font-size: 11px;
-  padding: 7px 14px;
-  letter-spacing: 0.5px;
+  background: var(--mode-bg);
+  color: var(--ink);
+  padding: 7px 16px;
+  font-size: 12px;
+  letter-spacing: normal;
+
+  a {
+    text-decoration: underline;
+  }
 }
 
-// Hide skip link cleanly when not focused (standard accessibility technique)
-.screen-reader-text:not(:focus) {
+.screen-reader-text:not(:focus),
+.skip:not(:focus) {
   position: absolute !important;
   clip: rect(1px, 1px, 1px, 1px) !important;
   padding: 0 !important;
@@ -54,4 +121,9 @@ ul.wp-block-post-template {
   height: 1px !important;
   width: 1px !important;
   overflow: hidden !important;
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
 }

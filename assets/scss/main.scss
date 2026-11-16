@@ -1,11 +1,11 @@
 /*!
-Theme Name: The Valley Indian
-Theme URI: https://valleyindian.com
-Author: The Valley Indian Team
-Description: A refined editorial community news theme for Clark County Indian Community, built with modern semantic HTML and SCSS design system for WordPress Full Site Editing (FSE).
-Version: 1.0.0
+Theme Name: Vegas Indian Pulse
+Theme URI: https://VegasIndianPulse.com
+Author: Rehan Lodhi
+Description: Editorial community news and directory block theme for Clark County's Indian community, built with WordPress Full Site Editing (FSE) and the Vegas Indian Pulse design system.
+Version: 2.0.0
 Requires at least: 6.2
-Tested up to: 6.7
+Tested up to: 7.1
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -14,22 +14,18 @@ Tags: news, blog, community, grid-layout, custom-colors, block-patterns, full-si
 */
 
 // =============================================================================
-// The Valley Indian - Master SCSS Stylesheet
-// Ready for Plain HTML & WordPress Block Theme (FSE)
+// Vegas Indian Pulse (valley-indian) - Master SCSS Stylesheet
 // =============================================================================
 
-// Abstracts (Variables, Tokens, Functions, Mixins)
 @use "abstracts/variables";
 @use "abstracts/wp-tokens";
 @use "abstracts/functions";
 @use "abstracts/mixins";
 
-// Base (Reset, Typography, Container)
 @use "base/reset";
 @use "base/typography";
 @use "base/base";
 
-// Components
 @use "components/buttons";
 @use "components/badges-tags";
 @use "components/cards";
@@ -37,18 +33,15 @@ Tags: news, blog, community, grid-layout, custom-colors, block-patterns, full-si
 @use "components/events";
 @use "components/sponsor";
 @use "components/newsletter";
-@use "components/editorial-art";
 @use "components/notice";
 @use "components/table";
 @use "components/tabs";
 @use "components/modal";
 @use "components/toast";
 
-// Layout
 @use "layout/header";
 @use "layout/footer";
 @use "layout/grid";
 
-// Pages
 @use "pages/single";
 @use "pages/desk";

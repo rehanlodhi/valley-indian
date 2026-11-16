@@ -3,26 +3,20 @@
 // =============================================================================
 
 @use "../abstracts/variables" as v;
-@use "../abstracts/mixins" as m;
+
+.tablewrap {
+  overflow: auto;
+}
 
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 14px;
+}
 
-  td,
-  th {
-    text-align: left;
-    border-bottom: 1px solid var(--line);
-    padding: 13px;
-  }
-
-  @include m.mobile {
-    font-size: 11px;
-
-    td,
-    th {
-      padding: 8px;
-    }
-  }
+td,
+th {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
 }

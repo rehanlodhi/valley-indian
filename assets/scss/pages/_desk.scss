@@ -1,18 +1,20 @@
 // =============================================================================
-// Editor's Desk Styles
-// Newsroom single-editor workflow, moderation queue, audit log
+// Editor's Desk & Moderation Queue Styles
 // =============================================================================
 
 @use "../abstracts/variables" as v;
-@use "../abstracts/mixins" as m;
 
 .desk-container {
+  .card {
+    margin-top: 0;
+  }
+
   .audit-log-item {
-    padding: 16px;
-    background: var(--card-bg, #{v.$color-card-bg});
+    padding: 20px;
+    background: var(--card-bg);
     border: 1px solid var(--line);
-    margin-bottom: 12px;
-    border-radius: v.$radius-base;
+    margin-bottom: 16px;
+    border-radius: v.$radius-card;
 
     strong {
       font-size: 15px;
@@ -23,21 +25,11 @@
     small {
       display: block;
       margin-top: 4px;
-      font-size: 11px;
+      font-size: 12px;
     }
 
-    .notes {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px dashed var(--line);
-      font-style: italic;
-    }
-  }
-
-  .queue-card {
-    .headline-input,
-    .copy-textarea {
-      font-size: 14px;
+    p {
+      margin: 8px 0 0;
     }
   }
 }

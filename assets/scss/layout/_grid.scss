@@ -1,5 +1,5 @@
 // =============================================================================
-// Layout Grids & Structural Containers
+// Editorial Page Grids & Layout Containers
 // =============================================================================
 
 @use "../abstracts/variables" as v;
@@ -9,94 +9,182 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--line);
-  margin-bottom: 20px;
-  padding-bottom: 10px;
+  gap: 20px;
+  margin: 0 0 22px;
+
+  h2 {
+    margin: 0;
+  }
+
+  @include m.mobile {
+    align-items: start;
+
+    small {
+      max-width: 130px;
+      text-align: right;
+    }
+  }
 }
 
 .hero {
   display: grid;
-  grid-template-columns: 1.75fr 1fr;
-  gap: 30px;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 38px;
+  margin: 0;
 
-  @include m.mobile {
+  @include m.tablet {
     grid-template-columns: 1fr;
   }
 }
 
-.lead {
+.lead,
+.wp-block-group.lead {
   border-right: 1px solid var(--line);
-  padding-right: 30px;
+  padding-right: 38px;
 
-  @include m.mobile {
-    padding: 0;
+  h1,
+  .wp-block-post-title {
+    margin: 18px 0 16px;
+    line-height: 1.15;
+    font-weight: 500;
+  }
+
+  .wp-block-post-excerpt,
+  p.muted {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 10px 0 20px;
+
+    .wp-block-post-excerpt__excerpt {
+      margin: 0;
+      font-size: inherit;
+      line-height: inherit;
+    }
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+
+    p,
+    .wp-block-post-terms {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: normal;
+      text-transform: none;
+      color: var(--muted);
+      line-height: 1.6;
+
+      a {
+        color: var(--muted);
+      }
+    }
+
+    .tag,
+    p.tag {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 1px;
+      line-height: 1.6;
+      text-transform: uppercase;
+      color: var(--tag-ink);
+      margin: 0;
+    }
+  }
+
+  @include m.tablet {
     border: 0;
+    padding: 0;
   }
 }
 
 .columns {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 35px;
-  margin-top: 30px;
+  gap: 34px;
+  margin-top: 35px;
 
-  @include m.mobile {
+  @include m.tablet {
     grid-template-columns: 1fr;
   }
 }
 
-.page-title {
-  max-width: 740px;
-  margin-bottom: 25px;
+.hero > aside > p.eyebrow,
+.page-title > p.eyebrow,
+.wp-block-group.page-title > p.eyebrow {
+  padding: 4px 0;
+  margin: 0;
+}
+
+.page-title,
+.wp-block-group.page-title {
+  max-width: 800px;
+  margin: 10px 0 28px;
+
+  > .eyebrow {
+    margin: 0;
+  }
+
+  > h1,
+  > .wp-block-heading {
+    margin: 12px 0 16px;
+  }
+
+  > p:not(.eyebrow) {
+    margin: 10px 0 20px;
+  }
 }
 
 .stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-
-  .card {
-    padding: 15px;
-  }
+  gap: 15px;
 
   strong {
-    font: 30px Georgia, serif;
     display: block;
+    font: 38px v.$font-serif;
+    color: var(--teal);
   }
 
   @include m.mobile {
-    gap: 6px;
+    gap: 8px;
 
     .card {
-      padding: 9px;
-      font-size: 11px;
+      padding: 12px;
+      font-size: 12px;
     }
   }
 }
 
 .queue {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-
-  @include m.mobile {
-    grid-template-columns: 1fr;
-  }
+  gap: 20px;
 }
 
 .review {
-  margin-top: 15px;
+  background: var(--review-bg);
   padding: 14px;
-  background: #eef0e7;
+  margin-top: 14px;
+  border-radius: 4px;
 
   label {
-    font-weight: normal;
+    font-weight: 400;
     margin: 7px 0;
-    display: block;
   }
+}
 
-  input {
-    width: auto;
-    margin: 0 7px 0 0;
-  }
+.empty {
+  padding: 40px;
+  border: 1px dashed var(--line);
+  text-align: center;
+  color: var(--muted);
+  border-radius: v.$radius-card;
 }

@@ -1,66 +1,97 @@
 // =============================================================================
-// Buttons Component
+// Buttons & Action Links Component
 // =============================================================================
 
 @use "../abstracts/variables" as v;
-@use "../abstracts/mixins" as m;
 
 button,
-.btn {
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--ink);
-  padding: 9px 15px;
-  border-radius: 3px;
-  font: inherit;
+.button,
+.btn,
+.wp-block-button__link.wp-element-button {
   cursor: pointer;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  padding: 10px 17px;
+  border-radius: v.$radius-base;
+  color: var(--ink);
   display: inline-block;
-  text-align: center;
+  font-family: v.$font-sans;
+  font-size: inherit;
+  font-weight: 600;
+  line-height: inherit;
   text-decoration: none;
-  box-sizing: border-box;
+  text-align: center;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
 
   &:hover {
-    background: #e5e9de;
+    border-color: var(--teal);
+    text-decoration: none;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.gold,
+.button.gold,
+.wp-block-button.gold .wp-block-button__link {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+
+  &:hover {
+    border-color: var(--gold);
+    filter: brightness(0.97);
   }
 }
 
 .primary,
-.btn-primary {
-  background: var(--ink);
-  color: white;
-  border-color: var(--ink);
+.btn-primary,
+.button.primary,
+.wp-block-button.primary .wp-block-button__link {
+  background: var(--teal);
+  color: #ffffff;
+  border-color: var(--teal);
 
   &:hover {
-    background: #285b54;
-    color: white;
+    background: #00665d;
+    border-color: #00665d;
+    color: #ffffff;
   }
 }
 
 .read,
-.btn-read {
+.btn-read,
+a.read,
+button.read,
+a.wp-block-read-more.read {
+  color: var(--teal);
+  font-size: 14px;
+  font-weight: 700;
+  background: none;
+  border: none;
   padding: 0;
-  border: 0;
-  color: var(--orange);
-  font-weight: bold;
-  font-size: 12px;
-  background: transparent;
-  cursor: pointer;
+  border-radius: 0;
+  display: inline-block;
 
   &:hover {
-    background: transparent;
+    text-decoration: underline;
+    border-color: transparent;
+    background: none;
   }
 }
 
-.close,
-.btn-close {
+.close {
   float: right;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+  margin: 0 0 15px 15px;
 }
 
+.tabs,
 .actions {
   display: flex;
-  gap: 9px;
-  margin-top: 15px;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
 }

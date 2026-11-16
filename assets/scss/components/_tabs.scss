@@ -6,12 +6,13 @@
 
 .tabs {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
   margin: 20px 0;
 
-  .active {
-    background: var(--ink);
-    color: white;
+  button.active {
+    background: var(--dark);
+    color: var(--gold);
+    border-color: var(--dark);
   }
 }

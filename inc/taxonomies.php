@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Register Area and Directory Category Taxonomies
  */
 function valley_indian_register_taxonomies() {
-	// 1. Geographic Area Taxonomy (Clark County, Las Vegas, Henderson, North Las Vegas)
+	// 1. Geographic Area Taxonomy
 	$area_labels = array(
 		'name'              => _x( 'Areas', 'taxonomy general name', 'valley-indian' ),
 		'singular_name'     => _x( 'Area', 'taxonomy singular name', 'valley-indian' ),
@@ -28,7 +28,7 @@ function valley_indian_register_taxonomies() {
 		'menu_name'         => __( 'Areas', 'valley-indian' ),
 	);
 
-	$area_args = array(
+	register_taxonomy( 'area', array( 'post', 'event', 'directory_listing' ), array(
 		'hierarchical'      => true,
 		'labels'            => $area_labels,
 		'show_ui'           => true,
@@ -36,9 +36,7 @@ function valley_indian_register_taxonomies() {
 		'query_var'         => true,
 		'rewrite'           => array( 'slug' => 'area' ),
 		'show_in_rest'      => true,
-	);
-
-	register_taxonomy( 'area', array( 'post', 'event', 'directory_listing' ), $area_args );
+	) );
 
 	// 2. Directory Categories Taxonomy
 	$dir_cat_labels = array(
@@ -53,7 +51,7 @@ function valley_indian_register_taxonomies() {
 		'menu_name'         => __( 'Categories', 'valley-indian' ),
 	);
 
-	$dir_cat_args = array(
+	register_taxonomy( 'directory_category', array( 'directory_listing' ), array(
 		'hierarchical'      => true,
 		'labels'            => $dir_cat_labels,
 		'show_ui'           => true,
@@ -61,39 +59,52 @@ function valley_indian_register_taxonomies() {
 		'query_var'         => true,
 		'rewrite'           => array( 'slug' => 'directory-category' ),
 		'show_in_rest'      => true,
-	);
-
-	register_taxonomy( 'directory_category', array( 'directory_listing' ), $dir_cat_args );
+	) );
 }
 add_action( 'init', 'valley_indian_register_taxonomies' );
 
 /**
- * Seed Default Taxonomy Terms
+ * Seed Default Taxonomy Terms matching Vegas Indian Pulse
  */
 function valley_indian_seed_default_terms() {
-	if ( ! term_exists( 'Clark County', 'area' ) ) {
-		wp_insert_term( 'Clark County', 'area' );
-	}
-	if ( ! term_exists( 'Las Vegas', 'area' ) ) {
-		wp_insert_term( 'Las Vegas', 'area' );
-	}
-	if ( ! term_exists( 'Henderson', 'area' ) ) {
-		wp_insert_term( 'Henderson', 'area' );
-	}
-	if ( ! term_exists( 'North Las Vegas', 'area' ) ) {
-		wp_insert_term( 'North Las Vegas', 'area' );
+	$areas = array(
+		'Clark County',
+		'Las Vegas',
+		'Henderson',
+		'North Las Vegas',
+		'Summerlin',
+		'United States',
+	);
+	foreach ( $areas as $area ) {
+		if ( ! term_exists( $area, 'area' ) ) {
+			wp_insert_term( $area, 'area' );
+		}
 	}
 
-	// Directory categories
 	$dir_cats = array(
-		'Food & groceries',
-		'Professional services',
-		'Arts & cultural organizations',
-		'Community & volunteering',
+		'Physicians',
+		'Attorneys',
+		'Accountants',
+		'Other businesses',
 	);
 	foreach ( $dir_cats as $cat ) {
 		if ( ! term_exists( $cat, 'directory_category' ) ) {
 			wp_insert_term( $cat, 'directory_category' );
+		}
+	}
+
+	$story_cats = array(
+		'Community',
+		'People',
+		'Business',
+		'Culture',
+		'National',
+		'Public records',
+		'Correction',
+	);
+	foreach ( $story_cats as $cat ) {
+		if ( ! term_exists( $cat, 'category' ) ) {
+			wp_insert_term( $cat, 'category' );
 		}
 	}
 }

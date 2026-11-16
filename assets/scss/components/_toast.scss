@@ -1,18 +1,26 @@
 // =============================================================================
-// Toast Feedback Notification
+// Toast Notification Banner
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 
 #toast,
 .toast {
+  display: none;
   position: fixed;
-  bottom: 24px;
+  bottom: 25px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--ink);
-  color: white;
-  padding: 14px 22px;
-  z-index: 5;
-  display: none;
+  background: var(--dark);
+  color: #ffffff;
+  padding: 15px 25px;
+  border-radius: 6px;
+  z-index: 99;
+  width: max-content;
+  max-width: 92vw;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2);
+
+  &.show {
+    display: block;
+  }
 }

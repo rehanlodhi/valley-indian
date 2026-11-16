@@ -1,22 +1,22 @@
 // =============================================================================
-// Notices & Disclaimers
+// Notices & Contextual Alerts
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 
-.prototype {
-  background: var(--ink);
-  color: white;
-  text-align: center;
-  padding: 7px;
-  font-size: 11px;
-  letter-spacing: 0.6px;
-}
-
-.notice {
-  padding: 14px 18px;
-  background: #efe7d3;
-  border-left: 3px solid #be7c3d;
-  font-size: 13px;
+.notice,
+p.notice,
+.site-main .notice {
+  padding: 15px 18px;
+  background: var(--notice-bg);
+  border-left: 3px solid var(--teal);
   margin: 20px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink);
+
+  a.read {
+    display: inline;
+    margin-left: 4px;
+  }
 }

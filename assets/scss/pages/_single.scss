@@ -1,35 +1,46 @@
 // =============================================================================
-// Single Article Page Template Styles
-// Prepared for WordPress single.html template
+// Single Article, Event & Directory Listing Templates
 // =============================================================================
 
 @use "../abstracts/variables" as v;
-@use "../abstracts/mixins" as m;
 
 .single-article {
   max-width: v.$content-max-width;
   margin: 0 auto 50px;
 
   .article-header {
-    margin-bottom: 25px;
+    margin-bottom: 24px;
 
     h1 {
-      margin-top: 10px;
-      margin-bottom: 15px;
+      margin-top: 12px;
+      margin-bottom: 14px;
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+
+      .wp-block-post-date,
+      .wp-block-post-author-name {
+        margin: 0;
+        display: inline;
+      }
     }
   }
 
   .article-meta {
     padding-bottom: 15px;
     border-bottom: 1px solid var(--line);
-    margin-bottom: 25px;
+    margin-bottom: 24px;
   }
 
   .article-lead {
     font-size: 18px;
     line-height: 1.5;
     color: var(--ink);
-    margin-bottom: 20px;
+    margin-bottom: 18px;
     font-weight: 500;
   }
 
@@ -42,30 +53,24 @@
     }
   }
 
-  .source-link-box {
-    margin: 25px 0;
-    padding: 14px 18px;
-    background: var(--review-bg, #{v.$color-review-bg});
-    border-radius: v.$radius-base;
-    font-size: 13px;
-
-    a {
-      color: var(--orange);
-      font-weight: bold;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
   .comments-section {
-    margin-top: 40px;
-    padding-top: 30px;
+    margin-top: 38px;
+    padding-top: 28px;
     border-top: 1px solid var(--line);
 
     h2 {
       margin-bottom: 8px;
+    }
+
+    ol.wp-block-comment-template {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 24px;
+
+      > li {
+        padding: 15px;
+        border-bottom: 1px solid var(--line);
+      }
     }
   }
 }

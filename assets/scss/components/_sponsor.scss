@@ -1,35 +1,177 @@
 // =============================================================================
-// Sponsor & Advertising Callout
+// Advertising & Community Callout Placements
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
-.sponsor {
-  margin: 25px 0;
-  padding: 18px 24px;
-  background: #ecebdf;
+.ad {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 22px;
-  border: 1px solid var(--line);
+  padding: 25px 30px;
+  background: var(--ad-bg);
+  border: 1px solid var(--ad-border);
+  border-radius: v.$radius-card;
+  margin: 34px 0;
 
-  p {
-    font: 22px Georgia, serif;
-    margin: 3px 0;
+  h3 {
+    margin: 0;
+    font-size: 25px;
+    line-height: 1.15;
   }
 
-  button,
-  .btn {
-    margin-left: auto;
+  p {
+    margin: 10px 0 20px;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  @include m.tablet {
+    flex-wrap: wrap;
+  }
+
+  @include m.mobile {
+    padding: 22px;
+  }
+}
+
+.top-ad {
+  margin: 0 0 24px;
+  padding: 18px 24px;
+
+  h3 {
+    margin: 0;
   }
 
   @include m.mobile {
     gap: 10px;
-    flex-wrap: wrap;
+    padding: 14px 16px;
 
-    p {
-      font-size: 19px;
+    h3 {
+      font-size: 21px;
     }
+
+    .eyebrow {
+      font-size: 9px;
+    }
+  }
+}
+
+.ad-slot {
+  margin: 36px 0;
+  padding: 20px 24px;
+  border: 1px solid var(--ad-slot-border);
+  border-radius: v.$radius-card;
+  background: var(--ad-slot-bg);
+  clear: both;
+
+  > small {
+    display: block;
+    margin-top: 14px;
+    font-size: 11px;
+    line-height: 1.6;
+    color: v.$color-ad-label;
+  }
+
+  @include m.mobile {
+    padding: 18px;
+    margin: 28px 0;
+  }
+}
+
+.ad-slot-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: v.$color-ad-label;
+  margin-bottom: 14px;
+  line-height: 1.6;
+
+  span {
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+}
+
+.ad-slot-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  h3 {
+    font-size: 24px;
+    line-height: 1.15;
+    margin: 0 0 8px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .read {
+    flex-shrink: 0;
+    line-height: 1.6;
+  }
+
+  @include m.mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+
+    h3 {
+      font-size: 22px;
+    }
+  }
+}
+
+.ad-slot-article {
+  margin: 32px 0;
+  padding: 20px;
+  background: v.$color-ad-article-bg;
+
+  h3 {
+    font-size: 23px;
+  }
+}
+
+.ad-image-placeholder {
+  aspect-ratio: 16 / 9;
+  margin: 16px 0 20px;
+  border: 1px dashed v.$color-ad-placeholder-border;
+  border-radius: v.$radius-base;
+  background: var(--ad-slot-bg);
+  color: v.$color-ad-placeholder-ink;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 18px;
+
+  strong {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  small {
+    font-size: 11px;
+    line-height: 1.6;
+    color: v.$color-ad-label;
   }
 }

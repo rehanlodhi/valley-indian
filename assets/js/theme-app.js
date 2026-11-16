@@ -1,15 +1,26 @@
 /**
- * The Valley Indian - Front-End Application Helper
+ * Vegas Indian Pulse (valley-indian) Front-End Application Helper
  * Progressive enhancement for WordPress Full Site Editing (FSE)
  */
 
+'use strict';
+
 document.addEventListener('DOMContentLoaded', () => {
   initNavigationHighlight();
+  initArchiveFiltering();
   initSubmissionForm();
   initNewsletterForm();
-  initArchiveFiltering();
+  initAdvertiseForm();
   initDeskWorkflow();
 });
+
+const escHtml = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+}[c]));
 
 /**
  * Toast Notifications
@@ -20,11 +31,12 @@ function showToast(message, isError = false) {
     toast = document.createElement('div');
     toast.id = 'toast';
     toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
     document.body.appendChild(toast);
   }
   toast.textContent = message;
-  toast.style.backgroundColor = isError ? 'var(--orange, #ba4c2c)' : 'var(--ink, #183c39)';
-  toast.style.color = '#fff';
+  toast.style.backgroundColor = isError ? 'var(--saffron, #ce580b)' : 'var(--dark, #060b14)';
+  toast.style.color = '#ffffff';
   toast.classList.add('show');
 
   if (window._toastTimer) clearTimeout(window._toastTimer);
@@ -35,82 +47,115 @@ function showToast(message, isError = false) {
 window.showToast = showToast;
 
 /**
+ * Shared REST Helper
+ */
+async function vipRequest(url, body) {
+  const settings = window.valleyIndianSettings || {};
+  const headers = { 'Content-Type': 'application/json' };
+  if (settings.nonce) {
+    headers['X-WP-Nonce'] = settings.nonce;
+  }
+  const res = await fetch(url, {
+    method: body !== undefined ? 'POST' : 'GET',
+    credentials: 'same-origin',
+    headers,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || data.error || 'Request failed');
+  }
+  return data;
+}
+
+/**
  * Navigation Current State Highlight
  */
 function initNavigationHighlight() {
   const navLinks = document.querySelectorAll('.main-nav a');
   const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
 
-  navLinks.forEach(link => {
+  navLinks.forEach((link) => {
     link.classList.remove('active');
-    const href = link.getAttribute('href');
-    if (!href) return;
-    const cleanHref = href.replace(/\/$/, '') || '/';
-    if (cleanHref === currentPath) {
-      link.classList.add('active');
+    link.removeAttribute('aria-current');
+    if (!link.href) return;
+    try {
+      const linkPath = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '') || '/';
+      if (linkPath === currentPath) {
+        link.classList.add('active');
+        link.setAttribute('aria-current', 'page');
+      }
+    } catch {
+      // Ignore malformed hrefs
     }
   });
 }
 
 /**
- * Real-Time Client-Side Archive Search & Filter
- * Progressively enhances Gutenberg wp:post-template queries on clark-county, across-america, and any card-grid pattern
+ * Client-Side Archive Search, Category & Location Filter
  */
 function initArchiveFiltering() {
   const searchInput = document.getElementById('archive-search');
   const categorySelect = document.getElementById('archive-category');
-  const resultsContainer = document.getElementById('results') || document.querySelector('.cards.wp-block-post-template, ul.wp-block-post-template');
+  const areaSelect = document.getElementById('archive-area');
+  const resultsWrap = document.getElementById('results');
+  const resultsContainer = resultsWrap
+    ? (resultsWrap.querySelector('ul.wp-block-post-template') || resultsWrap)
+    : document.querySelector('.cards.wp-block-post-template');
 
-  if (!resultsContainer || (!searchInput && !categorySelect)) return;
+  if (!resultsContainer || (!searchInput && !categorySelect && !areaSelect)) return;
 
-  // Restore state from URL search params if present
   const params = new URLSearchParams(window.location.search);
   const initialQuery = params.get('s') || '';
   const initialCategory = params.get('category') || '';
+  const initialArea = params.get('area') || '';
 
-  if (searchInput && initialQuery) {
-    searchInput.value = initialQuery;
-  }
-  if (categorySelect && initialCategory) {
-    for (let i = 0; i < categorySelect.options.length; i++) {
-      if (categorySelect.options[i].value.toLowerCase() === initialCategory.toLowerCase()) {
-        categorySelect.selectedIndex = i;
+  const selectValueCI = (sel, val) => {
+    if (!sel || !val) return;
+    const target = val.toLowerCase();
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value.toLowerCase() === target) {
+        sel.selectedIndex = i;
         break;
       }
     }
-  }
+  };
+
+  if (searchInput && initialQuery) searchInput.value = initialQuery;
+  selectValueCI(categorySelect, initialCategory);
+  selectValueCI(areaSelect, initialArea);
 
   let debounceTimer = null;
 
-  function updateUrlParams(query, filter) {
+  function updateUrlParams(q, cat, areaVal) {
     const url = new URL(window.location.href);
-    if (query) {
-      url.searchParams.set('s', query);
-    } else {
-      url.searchParams.delete('s');
-    }
-    if (filter && filter !== 'all') {
-      url.searchParams.set('category', filter);
-    } else {
-      url.searchParams.delete('category');
-    }
+    if (q) url.searchParams.set('s', q);
+    else url.searchParams.delete('s');
+
+    if (cat && cat !== 'all') url.searchParams.set('category', cat);
+    else url.searchParams.delete('category');
+
+    if (areaVal && areaVal !== 'all') url.searchParams.set('area', areaVal);
+    else url.searchParams.delete('area');
+
     window.history.replaceState({}, '', url.toString());
   }
 
   function filterCards() {
     const query = (searchInput ? searchInput.value : '').toLowerCase().trim();
-    const filter = categorySelect ? categorySelect.value.toLowerCase() : 'all';
+    const cat = categorySelect ? categorySelect.value.toLowerCase() : 'all';
+    const areaVal = areaSelect ? areaSelect.value.toLowerCase() : 'all';
 
-    // Target the direct list item or card children only
-    const items = resultsContainer.querySelectorAll(':scope > li, :scope > .card, ul.cards > li');
+    const items = resultsContainer.querySelectorAll(':scope > li, :scope > .card');
     let visibleCount = 0;
 
-    items.forEach(item => {
+    items.forEach((item) => {
       const text = item.textContent.toLowerCase();
       const matchesQuery = !query || text.includes(query);
-      const matchesCategory = (filter === 'all') || text.includes(filter);
+      const matchesCat = (cat === 'all') || text.includes(cat);
+      const matchesArea = (areaVal === 'all') || text.includes(areaVal);
 
-      if (matchesQuery && matchesCategory) {
+      if (matchesQuery && matchesCat && matchesArea) {
         item.style.display = '';
         visibleCount++;
       } else {
@@ -118,241 +163,507 @@ function initArchiveFiltering() {
       }
     });
 
-    let noResultsMsg = document.getElementById('no-archive-results');
+    let emptyBox = document.getElementById('no-archive-results');
     if (visibleCount === 0) {
-      if (!noResultsMsg) {
-        noResultsMsg = document.createElement('div');
-        noResultsMsg.id = 'no-archive-results';
-        noResultsMsg.className = 'notice';
-        noResultsMsg.style.marginTop = '20px';
-        noResultsMsg.textContent = 'No matching stories found. Try a different search term or category.';
-        resultsContainer.parentNode.insertBefore(noResultsMsg, resultsContainer.nextSibling);
+      if (!emptyBox) {
+        emptyBox = document.createElement('div');
+        emptyBox.id = 'no-archive-results';
+        emptyBox.className = 'empty';
+        emptyBox.style.marginTop = '20px';
+        emptyBox.textContent = 'No matches. Try another category, location, or search.';
+        resultsContainer.parentNode.insertBefore(emptyBox, resultsContainer.nextSibling);
       } else {
-        noResultsMsg.style.display = 'block';
+        emptyBox.style.display = 'block';
       }
-    } else if (noResultsMsg) {
-      noResultsMsg.style.display = 'none';
+    } else if (emptyBox) {
+      emptyBox.style.display = 'none';
     }
 
-    // Debounced URL state update
     if (debounceTimer) clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      updateUrlParams(query, filter);
-    }, 250);
+    debounceTimer = setTimeout(() => updateUrlParams(query, cat, areaVal), 200);
   }
 
-  if (searchInput) {
-    searchInput.addEventListener('input', filterCards);
-  }
-  if (categorySelect) {
-    categorySelect.addEventListener('change', filterCards);
-  }
+  if (searchInput) searchInput.addEventListener('input', filterCards);
+  if (categorySelect) categorySelect.addEventListener('change', filterCards);
+  if (areaSelect) areaSelect.addEventListener('change', filterCards);
 
-  // Trigger initial filter if params were pre-populated
-  if (initialQuery || (initialCategory && initialCategory.toLowerCase() !== 'all')) {
+  if (initialQuery || (initialCategory && initialCategory.toLowerCase() !== 'all') || (initialArea && initialArea.toLowerCase() !== 'all')) {
     filterCards();
   }
 }
 
 /**
- * Story Submission Form Handling via WordPress REST API
+ * Multi-Type Community Submission Form (/submit)
  */
+function renderDynamicSubmissionFields(type) {
+  const container = document.getElementById('dynamic-submission-fields');
+  if (!container) return;
+
+  const areas = ['Clark County', 'Las Vegas', 'Henderson', 'North Las Vegas', 'Summerlin', 'United States'];
+  const categories = type === 'businesses'
+    ? ['Physicians', 'Attorneys', 'Accountants', 'Other businesses']
+    : type === 'correction'
+      ? ['Correction']
+      : ['Community', 'People', 'Culture', 'Business', 'National', 'Public records'];
+
+  let html = `
+    <label>Location
+      <select name="area">
+        ${areas.map((a) => `<option value="${escHtml(a)}">${escHtml(a)}</option>`).join('')}
+      </select>
+    </label>
+    <label>Category
+      <select name="category">
+        ${categories.map((c) => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('')}
+      </select>
+    </label>
+  `;
+
+  if (type === 'businesses') {
+    html += `
+      <label>Specialty or service
+        <input name="specialty" required maxlength="120">
+      </label>
+    `;
+  } else if (type === 'events') {
+    html += `
+      <label>Event date
+        <input name="date" type="date" required>
+      </label>
+      <label>Venue
+        <input name="venue" maxlength="200">
+      </label>
+    `;
+  }
+
+  container.innerHTML = html;
+}
+
 function initSubmissionForm() {
   const form = document.getElementById('story-submission-form');
   if (!form) return;
 
+  const typeSelect = document.getElementById('submission-type');
+  const params = new URLSearchParams(window.location.search);
+  const initialType = params.get('type');
+
+  if (typeSelect) {
+    if (initialType && ['stories', 'businesses', 'events', 'correction'].includes(initialType)) {
+      typeSelect.value = initialType;
+    }
+    renderDynamicSubmissionFields(typeSelect.value);
+    typeSelect.addEventListener('change', () => renderDynamicSubmissionFields(typeSelect.value));
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn ? btn.textContent : '';
+    const settings = window.valleyIndianSettings || {};
+    const restUrl = settings.restUrl || '/wp-json/valley-indian/v1/submit';
 
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn ? submitBtn.textContent : '';
-
-    const formData = new FormData(form);
+    const fd = new FormData(form);
     const payload = {
-      title: (formData.get('title') || '').toString().trim(),
-      area: (formData.get('area') || '').toString().trim(),
-      category: (formData.get('category') || '').toString().trim(),
-      body: (formData.get('body') || '').toString().trim(),
-      url: (formData.get('url') || '').toString().trim()
+      type: (fd.get('type') || 'stories').toString(),
+      title: (fd.get('title') || '').toString().trim(),
+      area: (fd.get('area') || 'Clark County').toString().trim(),
+      category: (fd.get('category') || 'Community').toString().trim(),
+      body: (fd.get('body') || '').toString().trim(),
+      url: (fd.get('url') || '').toString().trim(),
+      email: (fd.get('email') || '').toString().trim(),
+      specialty: (fd.get('specialty') || '').toString().trim(),
+      date: (fd.get('date') || '').toString().trim(),
+      venue: (fd.get('venue') || '').toString().trim(),
+      website: (fd.get('website') || '').toString().trim(),
+      consent: form.querySelector('input[name="consent"]')?.checked || false,
     };
 
-    if (!payload.title || !payload.body) {
-      showToast('Please fill out both headline and details.', true);
-      return;
-    }
-
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Submitting to newsroom...';
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
     }
 
     try {
-      const restUrl = (window.valleyIndianSettings && window.valleyIndianSettings.restUrl)
-        ? window.valleyIndianSettings.restUrl
-        : '/wp-json/valley-indian/v1/submit';
-
-      const nonce = (window.valleyIndianSettings && window.valleyIndianSettings.nonce)
-        ? window.valleyIndianSettings.nonce
-        : '';
-
-      const response = await fetch(restUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-WP-Nonce': nonce
-        },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        form.reset();
-        showToast(result.message || 'Story submitted to editorial queue! Thank you.');
-      } else {
-        const errorMsg = result.message || 'Unable to submit story. Please try again.';
-        showToast(errorMsg, true);
-      }
+      const result = await vipRequest(restUrl, payload);
+      form.reset();
+      if (typeSelect) renderDynamicSubmissionFields(typeSelect.value);
+      showToast(result.message || 'Submitted for editorial review. Nothing has been published.');
     } catch (err) {
-      console.error('Submission error:', err);
-      showToast('Connection error. Story could not be submitted.', true);
+      showToast(err.message || 'Unable to submit. Please check your entries.', true);
     } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = originalText;
       }
     }
   });
 }
 
 /**
- * Newsletter Form Handling
+ * Newsletter Request Form
  */
 function initNewsletterForm() {
   const form = document.getElementById('newsletter-form');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const emailInput = document.getElementById('newsletter-email');
-    if (emailInput && emailInput.value) {
-      showToast('Thank you for subscribing to The Valley Brief!');
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn ? btn.textContent : '';
+    const settings = window.valleyIndianSettings || {};
+    const restUrl = settings.restUrl || '/wp-json/valley-indian/v1/submit';
+    const fd = new FormData(form);
+
+    if (btn) btn.disabled = true;
+    try {
+      const res = await vipRequest(restUrl, {
+        type: 'subscribers',
+        email: (fd.get('email') || '').toString().trim(),
+        website: (fd.get('website') || '').toString().trim(),
+        consent: form.querySelector('input[name="consent"]')?.checked || false,
+      });
       form.reset();
+      showToast(res.message || 'Subscription request recorded.');
+    } catch (err) {
+      showToast(err.message || 'Unable to record subscription request.', true);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
     }
   });
 }
-window.handleNewsletter = function(e) {
-  if (e) e.preventDefault();
-  showToast('Thank you for subscribing to The Valley Brief!');
-  const form = document.getElementById('newsletter-form');
-  if (form) form.reset();
-};
 
 /**
- * Editor's Desk Interactive Workflow
+ * Advertising Inquiry Form (/advertise)
  */
-let currentDeskTab = 'stories';
-function initDeskWorkflow() {
-  const deskContainer = document.querySelector('.desk-container');
-  if (!deskContainer) return;
-  renderDeskTab(currentDeskTab);
-}
+function initAdvertiseForm() {
+  const form = document.getElementById('advertise-inquiry-form');
+  if (!form) return;
 
-function switchDeskTab(tab) {
-  currentDeskTab = tab;
-  const tabBtns = document.querySelectorAll('#desk-tabs button');
-  tabBtns.forEach(btn => {
-    if (btn.getAttribute('onclick')?.includes(tab)) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn ? btn.textContent : '';
+    const settings = window.valleyIndianSettings || {};
+    const restUrl = settings.restUrl || '/wp-json/valley-indian/v1/submit';
+    const fd = new FormData(form);
+
+    if (btn) btn.disabled = true;
+    try {
+      const res = await vipRequest(restUrl, {
+        type: 'inquiries',
+        title: (fd.get('title') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim(),
+        category: (fd.get('category') || 'Homepage banner').toString().trim(),
+        body: (fd.get('body') || '').toString().trim(),
+        website: (fd.get('website') || '').toString().trim(),
+      });
+      form.reset();
+      showToast(res.message || 'Inquiry recorded for review. No email sent.');
+    } catch (err) {
+      showToast(err.message || 'Unable to submit inquiry.', true);
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = originalText;
+      }
     }
   });
-  renderDeskTab(tab);
 }
-window.switchDeskTab = switchDeskTab;
 
-function renderDeskTab(tab) {
-  const contentEl = document.getElementById('desk-content');
-  if (!contentEl) return;
+/**
+ * Authenticated Editor's Desk (/desk)
+ */
+const DESK_DEFAULT_STATE = {
+  authenticated: false,
+  stories: [
+    {
+      id: 1,
+      title: 'Community arts gathering proposed for the fall calendar',
+      category: 'Culture',
+      area: 'Clark County',
+      status: 'pending',
+      body: 'Demo submission. Verify all details before using Approve & publish.',
+      court: false,
+    },
+    {
+      id: 2,
+      title: 'Court-record lead: identity and public-interest review required',
+      category: 'Public records',
+      area: 'Clark County',
+      status: 'pending',
+      body: 'Fictional workflow example. Check the original docket, identity, case status and public-interest basis.',
+      court: true,
+    },
+  ],
+  comments: [
+    {
+      id: 101,
+      name: 'Sample reader',
+      text: 'I would love to see more local volunteer opportunities featured.',
+      status: 'pending',
+    },
+  ],
+  businesses: [],
+  events: [],
+  subscribers: [],
+  inquiries: [],
+  log: [],
+};
 
-  if (tab === 'stories') {
-    contentEl.innerHTML = `
-      <div class="cards" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
-        <div class="card">
-          <span class="eyebrow">Pending submission · Clark County</span>
-          <h3>Community Youth Robotics Team Advances to Nationals</h3>
-          <p class="muted">A team of high school students from Henderson designed an autonomous robot...</p>
-          <div style="margin-top:auto;display:flex;gap:10px;">
-            <button class="btn primary" onclick="showToast('Story approved and published!')">Approve & Publish</button>
-            <button class="btn" onclick="showToast('Edit mode opened')">Edit Copy</button>
-          </div>
+let deskTab = 'stories';
+let deskState = DESK_DEFAULT_STATE;
+
+async function refreshDeskState() {
+  const settings = window.valleyIndianSettings || {};
+  const notice = document.getElementById('desk-status-notice');
+  if (!settings.canModerate) {
+    deskState = JSON.parse(JSON.stringify(DESK_DEFAULT_STATE));
+    if (notice) {
+      const loginHref = escHtml(settings.loginUrl || '/wp-login.php');
+      notice.innerHTML = `Review preview mode. <a class="read" href="${loginHref}">Sign in as WordPress Editor ↗</a> to manage live pending submissions and persist moderation decisions.`;
+    }
+    return;
+  }
+
+  try {
+    deskState = await vipRequest(settings.deskUrl || '/wp-json/valley-indian/v1/desk');
+    if (notice) {
+      notice.textContent = 'Authenticated WordPress editorial workspace. Decisions and audit log entries are saved on the server.';
+    }
+  } catch (err) {
+    if (notice) {
+      notice.textContent = 'Unable to load editorial queue from REST API; showing preview.';
+    }
+  }
+}
+
+function updateDeskStats() {
+  const pendingStories = (deskState.stories || []).filter((x) => x.status === 'pending').length;
+  const pendingComments = (deskState.comments || []).filter((x) => x.status === 'pending').length;
+  const publishedStories = (deskState.stories || []).filter((x) => x.status === 'publish' || x.status === 'published').length;
+
+  const s1 = document.getElementById('stat-stories-count');
+  const s2 = document.getElementById('stat-comments-count');
+  const s3 = document.getElementById('stat-published-count');
+  if (s1) s1.textContent = String(pendingStories);
+  if (s2) s2.textContent = String(pendingComments);
+  if (s3) s3.textContent = String(publishedStories);
+}
+
+function renderReviewCard(kind, x) {
+  const simple = ['comments', 'subscribers', 'inquiries'].includes(kind);
+  const checks = [
+    'Facts, identity and relevance verified',
+    'Attribution and usage rights checked',
+    ...(x.court ? [
+      'Current case status verified',
+      'Allegations distinguished from findings',
+      'Response outreach and privacy reviewed',
+    ] : []),
+  ];
+
+  const approveLabel = ['subscribers', 'inquiries'].includes(kind)
+    ? 'Mark reviewed'
+    : `Approve${kind === 'comments' ? '' : ' & publish'}`;
+
+  return `
+    <article class="card">
+      <span class="tag">${x.court ? 'Court record · Enhanced review' : 'Pending review'}</span>
+      <h3>${escHtml(x.title || x.name || 'Newsletter request')}</h3>
+      ${x.email ? `<p>Private contact: ${escHtml(x.email)}</p>` : ''}
+      ${x.text ? `<p>${escHtml(x.text)}</p>` : ''}
+      ${!simple ? `
+        <label>Headline
+          <input id="desk-title-${x.id}" value="${escHtml(x.title)}" maxlength="160">
+        </label>
+        <label>Copy
+          <textarea id="desk-body-${x.id}">${escHtml(x.body || '')}</textarea>
+        </label>
+        <div class="review" id="desk-checks-${x.id}">
+          ${checks.map((label) => `<label><input type="checkbox">${escHtml(label)}</label>`).join('')}
         </div>
-        <div class="card">
-          <span class="eyebrow">Pending submission · Las Vegas</span>
-          <h3>Annual South Asian Music Festival Returning in Spring</h3>
-          <p class="muted">Organizers announced dates and preliminary lineup for the annual cultural gathering...</p>
-          <div style="margin-top:auto;display:flex;gap:10px;">
-            <button class="btn primary" onclick="showToast('Story approved and published!')">Approve & Publish</button>
-            <button class="btn" onclick="showToast('Edit mode opened')">Edit Copy</button>
-          </div>
-        </div>
+      ` : (x.body ? `<p>${escHtml(x.body)}</p>` : '')}
+      <label>Editorial notes
+        <textarea id="desk-notes-${x.id}" placeholder="Verification, follow-up, or rejection reason"></textarea>
+      </label>
+      <div class="actions">
+        <button type="button" class="primary" onclick="window.vipDeskDecide('${kind}', ${x.id}, 'approve')">${approveLabel}</button>
+        <button type="button" onclick="window.vipDeskDecide('${kind}', ${x.id}, 'reject')">Reject</button>
       </div>
-    `;
-  } else if (tab === 'comments') {
-    contentEl.innerHTML = `
-      <div style="margin-top:20px;">
-        <div class="card" style="margin-bottom:15px;">
-          <span class="eyebrow">Comment on "Many roots. One valley."</span>
-          <p><strong>Asha M.</strong>: <em>"So thrilled to see a dedicated publication for the Valley Indian community. Great first issue!"</em></p>
-          <div style="margin-top:10px;display:flex;gap:10px;">
-            <button class="btn primary" onclick="showToast('Comment approved!')">Approve</button>
-            <button class="btn" onclick="showToast('Comment archived')">Dismiss</button>
+    </article>
+  `;
+}
+
+function renderDeskTabContent() {
+  const container = document.getElementById('desk-content');
+  if (!container) return;
+
+  updateDeskStats();
+
+  const queues = ['stories', 'comments', 'businesses', 'events', 'subscribers', 'inquiries'];
+  if (queues.includes(deskTab)) {
+    const pending = (deskState[deskTab] || []).filter((x) => x.status === 'pending');
+    container.innerHTML = pending.length
+      ? pending.map((item) => renderReviewCard(deskTab, item)).join('')
+      : '<div class="empty">All caught up. No pending items in this queue.</div>';
+    return;
+  }
+
+  if (deskTab === 'published') {
+    const sections = [
+      ['stories', 'Articles'],
+      ['businesses', 'Businesses'],
+      ['events', 'Events'],
+    ];
+    container.innerHTML = sections.map(([k, label]) => {
+      const pubItems = (deskState[k] || []).filter((x) => x.status === 'publish' || x.status === 'published');
+      return `
+        <h2>${label}</h2>
+        ${pubItems.length ? pubItems.map((x) => `
+          <div class="card">
+            <h3>${escHtml(x.title)}</h3>
+            <div class="actions">
+              <button type="button" onclick="window.vipDeskDecide('${k}', ${x.id}, 'unpublish')">Return to review</button>
+            </div>
           </div>
-        </div>
-      </div>
-    `;
-  } else if (tab === 'sources') {
-    contentEl.innerHTML = `
-      <div style="margin-top:20px;">
-        <table style="width:100%;border-collapse:collapse;font-size:13px;background:var(--card-bg);border:1px solid var(--line);">
-          <thead>
-            <tr style="background:#efe7d3;text-align:left;">
-              <th style="padding:10px;border-bottom:1px solid var(--line);">Source Feed</th>
-              <th style="padding:10px;border-bottom:1px solid var(--line);">Type</th>
-              <th style="padding:10px;border-bottom:1px solid var(--line);">Status</th>
-              <th style="padding:10px;border-bottom:1px solid var(--line);">Last Poll</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="padding:10px;border-bottom:1px solid var(--line);">Clark County Public Records RSS</td>
-              <td style="padding:10px;border-bottom:1px solid var(--line);">Court / Legal</td>
-              <td style="padding:10px;border-bottom:1px solid var(--line);color:#285b54;font-weight:bold;">Active</td>
-              <td style="padding:10px;border-bottom:1px solid var(--line);">12 mins ago</td>
-            </tr>
-            <tr>
-              <td style="padding:10px;border-bottom:1px solid var(--line);">Las Vegas Chamber of Commerce</td>
-              <td style="padding:10px;border-bottom:1px solid var(--line);">Business</td>
-              <td style="padding:10px;border-bottom:1px solid var(--line);color:#285b54;font-weight:bold;">Active</td>
-              <td style="padding:10px;border-bottom:1px solid var(--line);">1 hour ago</td>
-            </tr>
-          </tbody>
+        `).join('') : '<div class="empty">No published items yet.</div>'}
+      `;
+    }).join('');
+    return;
+  }
+
+  if (deskTab === 'sources') {
+    const rows = [
+      ['Local / national news', 'RSS / licensed API'],
+      ['Court records', 'Permitted alerts / manual verified import'],
+      ['Facebook · Instagram · X', 'Outbound publisher / inbound moderation adapters'],
+      ['Newsletter', 'Email provider + double opt-in'],
+    ];
+    container.innerHTML = `
+      <h2>Connected-source roadmap</h2>
+      <div class="tablewrap">
+        <table>
+          <tr><th>Source</th><th>Collection route</th><th>Status</th></tr>
+          ${rows.map(([src, route]) => `<tr><td>${src}</td><td>${route}</td><td>Not connected</td></tr>`).join('')}
         </table>
       </div>
-    `;
-  } else if (tab === 'audit') {
-    contentEl.innerHTML = `
-      <div style="margin-top:20px;">
-        <div class="audit-log-item" style="padding:15px;background:var(--card-bg);border:1px solid var(--line);margin-bottom:10px;">
-          <strong>Published: "Small businesses, big neighborhood connections"</strong>
-          <small class="muted">November 8, 2026 · Editor: Admin · Status: Live</small>
-        </div>
-        <div class="audit-log-item" style="padding:15px;background:var(--card-bg);border:1px solid var(--line);margin-bottom:10px;">
-          <strong>Approved: "The next generation of community builders"</strong>
-          <small class="muted">November 8, 2026 · Editor: Admin · Status: Live</small>
-        </div>
+      <div class="notice">Authenticated editors can test deduplicated lead intake below. Imported leads always enter pending review.</div>
+      <div>
+        <button type="button" class="primary" onclick="window.vipDeskImport()">Test feed intake</button>
       </div>
     `;
+    return;
   }
+
+  const log = (deskState.log || []).slice().reverse();
+  container.innerHTML = log.length
+    ? log.map((entry) => `
+      <article class="audit-log-item">
+        <strong>${escHtml(entry.action)}</strong>
+        <p>${escHtml(entry.title)}</p>
+        <small class="muted">${escHtml(entry.time)}</small>
+        ${entry.notes ? `<p>${escHtml(entry.notes)}</p>` : ''}
+      </article>
+    `).join('')
+    : '<div class="empty">No decisions recorded yet.</div>';
+}
+
+window.vipDeskDecide = async function (kind, id, action) {
+  const settings = window.valleyIndianSettings || {};
+  const item = (deskState[kind] || []).find((x) => x.id === id);
+  if (!item) return;
+
+  const titleEl = document.getElementById(`desk-title-${id}`);
+  const bodyEl = document.getElementById(`desk-body-${id}`);
+  const notesEl = document.getElementById(`desk-notes-${id}`);
+  const checks = [...document.querySelectorAll(`#desk-checks-${id} input`)].map((c) => c.checked);
+
+  const payload = {
+    kind,
+    id,
+    action,
+    title: titleEl ? titleEl.value.trim() : undefined,
+    body: bodyEl ? bodyEl.value.trim() : undefined,
+    notes: notesEl ? notesEl.value.trim() : '',
+    checks,
+  };
+
+  if (action === 'approve' && !['comments', 'subscribers', 'inquiries'].includes(kind)) {
+    if ((titleEl && !payload.title) || (bodyEl && !payload.body) || checks.some((v) => !v)) {
+      showToast('Complete every verification check and the article text.', true);
+      return;
+    }
+    if (item.court && !payload.notes) {
+      showToast('Document case verification and outreach before publication.', true);
+      return;
+    }
+  }
+
+  if (!settings.canModerate) {
+    if (action === 'reject') {
+      item.status = 'rejected';
+    } else if (action === 'unpublish') {
+      item.status = 'pending';
+    } else {
+      item.status = 'publish';
+    }
+    deskState.log.push({
+      action: `${kind} ${action}`,
+      title: item.title || item.text || 'Preview item',
+      notes: payload.notes,
+      time: new Date().toISOString(),
+    });
+    renderDeskTabContent();
+    showToast('Preview decision recorded (sign in as editor to save to WordPress).');
+    return;
+  }
+
+  try {
+    await vipRequest(`${settings.deskUrl}/decide`, payload);
+    await refreshDeskState();
+    renderDeskTabContent();
+    showToast('Decision saved.');
+  } catch (err) {
+    showToast(err.message || 'Unable to save decision.', true);
+  }
+};
+
+window.vipDeskImport = async function () {
+  const settings = window.valleyIndianSettings || {};
+  if (!settings.canModerate) {
+    showToast('Sign in as WordPress Editor to test live feed intake.', true);
+    return;
+  }
+  try {
+    const res = await vipRequest(`${settings.deskUrl}/import`, {});
+    await refreshDeskState();
+    deskTab = 'stories';
+    document.querySelectorAll('#desk-tabs button').forEach((b) => {
+      b.classList.toggle('active', b.dataset.tab === 'stories');
+    });
+    renderDeskTabContent();
+    showToast(res.message || 'Intake processed.');
+  } catch (err) {
+    showToast(err.message || 'Feed intake test failed.', true);
+  }
+};
+
+async function initDeskWorkflow() {
+  const deskWrap = document.querySelector('.desk-container');
+  if (!deskWrap) return;
+
+  const tabs = document.querySelectorAll('#desk-tabs button');
+  tabs.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      deskTab = btn.dataset.tab || 'stories';
+      tabs.forEach((b) => b.classList.toggle('active', b === btn));
+      renderDeskTabContent();
+    });
+  });
+
+  await refreshDeskState();
+  renderDeskTabContent();
 }

@@ -1,23 +1,26 @@
-<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+<!-- wp:pattern {"slug":"valley-indian/mode-banner"} /-->
+
+<!-- wp:template-part {"slug":"header","tagName":"header","className":"site-header"} /-->
 
 <!-- wp:group {"tagName":"main","className":"site-main","layout":{"type":"default"}} -->
-<main class="site-main">
+<main id="app" class="wp-block-group site-main">
   <div class="sectionhead">
     <span class="eyebrow">The community edition</span>
-    <small>Las Vegas · Henderson · North Las Vegas · Beyond</small>
+    <small>Las Vegas · Henderson · North Las Vegas · Summerlin</small>
   </div>
 
   <!-- wp:query {"queryId":1,"query":{"perPage":9,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
   <div class="wp-block-query">
-    <!-- wp:post-template {"className":"cards"} -->
+    <!-- wp:post-template {"className":"cards three"} -->
       <!-- wp:group {"tagName":"article","className":"card wp-block-post"} -->
       <article class="card wp-block-post">
+        <!-- wp:paragraph {"className":"tag"} -->
+        <p class="tag">Sample content</p>
+        <!-- /wp:paragraph -->
         <!-- wp:post-terms {"term":"category","className":"eyebrow"} /-->
-        <!-- wp:post-title {"isLink":true,"className":"wp-block-post-title"} /-->
-        <!-- wp:post-excerpt {"moreText":"Read story ↗","className":"muted wp-block-post-excerpt"} /-->
-        <div class="meta">
-          <!-- wp:post-date /-->
-        </div>
+        <!-- wp:post-title {"level":3,"isLink":true,"className":"wp-block-post-title"} /-->
+        <!-- wp:post-excerpt {"className":"muted wp-block-post-excerpt"} /-->
+        <!-- wp:read-more {"content":"Read story ↗","className":"read"} /-->
       </article>
       <!-- /wp:group -->
     <!-- /wp:post-template -->
@@ -32,4 +35,4 @@
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","tagName":"footer","className":"site-footer"} /-->

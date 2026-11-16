@@ -1,65 +1,152 @@
 <?php
 /**
- * Title: Partner With Us Page
+ * Title: Advertise With Us Page
  * Slug: valley-indian/advertise-page
  * Categories: valley-indian
- * Description: Community advertising and sponsorship opportunities.
+ * Description: Sponsorship placements overview paired with a business advertising inquiry form.
  */
 ?>
 <!-- wp:group {"className":"page-title","layout":{"type":"default"}} -->
 <div class="wp-block-group page-title"><!-- wp:paragraph {"className":"eyebrow"} -->
-<p class="eyebrow">Support community journalism</p>
+<p class="eyebrow">Grow with the community</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">A local audience. A meaningful connection.</h1>
-<!-- /wp:heading --></div>
-<!-- /wp:group -->
-
-<!-- wp:group {"className":"cards","layout":{"type":"default"}} -->
-<div class="wp-block-group cards"><!-- wp:group {"className":"card","layout":{"type":"default"}} -->
-<div class="wp-block-group card"><!-- wp:heading {"level":2} -->
-<h2 class="wp-block-heading">Homepage sponsorship</h2>
+<h1 class="wp-block-heading">Local connections.<br>Lasting impact.</h1>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Proposed placement. Availability, audience metrics and rates will be defined before launch.</p>
+<p>Support community journalism while introducing your business to Clark County’s Indian community.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"cards three","layout":{"type":"default"}} -->
+<div class="wp-block-group cards three"><!-- wp:group {"className":"card","layout":{"type":"default"}} -->
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"tag"} -->
-<p class="tag">Always labeled Sponsored</p>
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Homepage banner</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"card","layout":{"type":"default"}} -->
-<div class="wp-block-group card"><!-- wp:heading {"level":2} -->
-<h2 class="wp-block-heading">Newsletter sponsorship</h2>
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Business spotlight</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Proposed placement. Availability, audience metrics and rates will be defined before launch.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph {"className":"tag"} -->
-<p class="tag">Always labeled Sponsored</p>
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"card","layout":{"type":"default"}} -->
-<div class="wp-block-group card"><!-- wp:heading {"level":2} -->
-<h2 class="wp-block-heading">Directory spotlight</h2>
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Article placement</h3>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Proposed placement. Availability, audience metrics and rates will be defined before launch.</p>
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"card","layout":{"type":"default"}} -->
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:paragraph {"className":"tag"} -->
-<p class="tag">Always labeled Sponsored</p>
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">News section banner</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"card","layout":{"type":"default"}} -->
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Directory banner</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"card","layout":{"type":"default"}} -->
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Events banner</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
+<!-- /wp:paragraph --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"card","layout":{"type":"default"}} -->
+<div class="wp-block-group card"><!-- wp:paragraph {"className":"tag"} -->
+<p class="tag">Placement available</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":3} -->
+<h3 class="wp-block-heading">Newsletter sponsorship</h3>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph -->
+<p>Rates and audience metrics will be established before commercial launch. All paid placements are clearly labeled.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group -->
 
-<!-- wp:paragraph {"className":"notice"} -->
-<p class="notice">Sponsors have no approval rights over independent editorial coverage. Advertising sales are not connected in this prototype.</p>
-<!-- /wp:paragraph -->
+<!-- wp:html -->
+<form class="form wp-block-group" id="advertise-inquiry-form" style="margin-top:30px">
+  <h2>Tell us about your business</h2>
+  <label>Business name
+    <input name="title" required maxlength="160">
+  </label>
+  <label>Contact email
+    <input name="email" type="email" required maxlength="200">
+  </label>
+  <label>Interested placement
+    <select name="category">
+      <option value="Homepage banner">Homepage banner</option>
+      <option value="Business spotlight">Business spotlight</option>
+      <option value="Article placement">Article placement</option>
+      <option value="News section banner">News section banner</option>
+      <option value="Directory banner">Directory banner</option>
+      <option value="Events banner">Events banner</option>
+      <option value="Newsletter sponsorship">Newsletter sponsorship</option>
+    </select>
+  </label>
+  <label>Message
+    <textarea name="body" required maxlength="3000"></textarea>
+  </label>
+  <label class="honeypot" aria-hidden="true">Leave blank
+    <input name="website" tabindex="-1" autocomplete="off">
+  </label>
+  <button type="submit" class="primary">Submit inquiry</button>
+  <p class="muted">Your inquiry is stored for the editor; no automated email is sent.</p>
+</form>
+<!-- /wp:html -->

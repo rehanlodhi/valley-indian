@@ -1,35 +1,60 @@
 // =============================================================================
-// Footer Layout
+// Full-Bleed Midnight 3-Column Footer
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
 footer.site-footer,
-footer {
-  border-top: 1px solid var(--ink);
-  padding-top: 25px;
-  padding-bottom: 30px;
-  display: flex;
-  gap: 30px;
-  align-items: center;
-  font-size: 11px;
+footer.wp-block-template-part {
+  width: 100%;
+  margin: 0;
+  background: var(--dark);
+  color: var(--cream);
+  padding: 45px max(28px, calc((100vw - 1224px) / 2));
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 35px;
 
-  strong {
-    font: 24px Georgia, serif;
-    min-width: 200px;
+  h2 {
+    color: var(--cream);
+    font-family: v.$font-serif;
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0 0 16px;
   }
 
-  span {
-    max-width: 500px;
+  p {
+    max-width: 420px;
+    font-size: 14px;
+    color: v.$color-footer-muted;
+    margin: 10px 0 20px;
+  }
+
+  a {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: var(--cream);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  small {
+    color: v.$color-footer-muted;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  @include m.tablet {
+    grid-template-columns: 1fr 1fr;
   }
 
   @include m.mobile {
-    display: block;
-
-    > * {
-      display: block;
-      margin-bottom: 15px;
-    }
+    grid-template-columns: 1fr;
   }
 }

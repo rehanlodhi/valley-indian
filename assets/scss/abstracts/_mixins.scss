@@ -1,16 +1,8 @@
 // =============================================================================
-// Mixins
-// Responsive breakpoints, layout helpers, and typography shortcuts
+// Responsive & Editorial Mixins
 // =============================================================================
 
 @use "variables" as v;
-
-// Media Queries
-@mixin mobile {
-  @media (max-width: #{v.$breakpoint-mobile}) {
-    @content;
-  }
-}
 
 @mixin tablet {
   @media (max-width: #{v.$breakpoint-tablet}) {
@@ -18,34 +10,22 @@
   }
 }
 
-// Typography shortcuts
+@mixin mobile {
+  @media (max-width: #{v.$breakpoint-mobile}) {
+    @content;
+  }
+}
+
 @mixin serif-heading {
   font-family: v.$font-serif;
   line-height: v.$line-height-heading;
-  font-weight: normal;
+  font-weight: 500;
 }
 
 @mixin eyebrow-style {
   font-size: v.$font-size-eyebrow;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: v.$letter-spacing-eyebrow;
-  color: var(--orange);
+  color: var(--teal);
   text-transform: uppercase;
-}
-
-@mixin meta-style {
-  font-size: v.$font-size-meta;
-  letter-spacing: v.$letter-spacing-meta;
-  color: var(--muted);
-}
-
-// Container constraint
-@mixin container {
-  max-width: v.$container-max-width;
-  margin: auto;
-  padding: v.$padding-container;
-
-  @include mobile {
-    padding: v.$padding-container-mobile;
-  }
 }

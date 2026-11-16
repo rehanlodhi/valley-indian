@@ -1,62 +1,85 @@
 <?php
 /**
- * Title: Submit a Story Page
+ * Title: Submit / Contribute Page
  * Slug: valley-indian/submit-page
  * Categories: valley-indian
- * Description: Community submission form for stories, events, and tips.
+ * Description: Community submission form supporting stories, businesses, events, and corrections.
  */
 ?>
 <!-- wp:group {"className":"page-title","layout":{"type":"default"}} -->
 <div class="wp-block-group page-title"><!-- wp:paragraph {"className":"eyebrow"} -->
-<p class="eyebrow">From the community</p>
+<p class="eyebrow">A community shaped by you</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Every neighborhood has a story.</h1>
+<h1 class="wp-block-heading">Share something that matters.</h1>
 <!-- /wp:heading -->
 
-<!-- wp:paragraph {"className":"muted"} -->
-<p class="muted">Share a story idea, event or listing for editorial review. Submissions never appear automatically.</p>
+<!-- wp:paragraph -->
+<p>Every submission goes to the editor. Nothing appears automatically.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
 <!-- wp:html -->
 <form class="form wp-block-group" id="story-submission-form">
-  <label>Headline or idea
-    <input name="title" required maxlength="160" placeholder="e.g. New Indian Grocery Opening in Henderson">
-  </label>
-
-  <label>Location
-    <select name="area">
-      <option value="Clark County">Clark County</option>
-      <option value="Las Vegas">Las Vegas</option>
-      <option value="Henderson">Henderson</option>
-      <option value="North Las Vegas">North Las Vegas</option>
-      <option value="United States">United States</option>
+  <label>Submission type
+    <select name="type" id="submission-type">
+      <option value="stories">Story or news tip</option>
+      <option value="businesses">Business listing</option>
+      <option value="events">Event</option>
+      <option value="correction">Correction</option>
     </select>
   </label>
 
-  <label>Category
-    <select name="category">
-      <option value="Community">Community</option>
-      <option value="Culture">Culture</option>
-      <option value="Business">Business</option>
-      <option value="People">People</option>
-      <option value="National">National</option>
-      <option value="Public records">Public records</option>
-    </select>
+  <label>Title or business name
+    <input name="title" required maxlength="160">
   </label>
+
+  <div id="dynamic-submission-fields">
+    <label>Location
+      <select name="area">
+        <option value="Clark County">Clark County</option>
+        <option value="Las Vegas">Las Vegas</option>
+        <option value="Henderson">Henderson</option>
+        <option value="North Las Vegas">North Las Vegas</option>
+        <option value="Summerlin">Summerlin</option>
+        <option value="United States">United States</option>
+      </select>
+    </label>
+    <label>Category
+      <select name="category">
+        <option value="Community">Community</option>
+        <option value="People">People</option>
+        <option value="Culture">Culture</option>
+        <option value="Business">Business</option>
+        <option value="National">National</option>
+        <option value="Public records">Public records</option>
+      </select>
+    </label>
+  </div>
 
   <label>Details
-    <textarea name="body" required maxlength="6000" rows="6" placeholder="Provide background, quotes, dates or details..."></textarea>
+    <textarea name="body" required maxlength="12000"></textarea>
   </label>
 
-  <label>Source link (optional)
-    <input name="url" type="url" placeholder="https://">
+  <label>Source or website link (optional)
+    <input name="url" type="url" placeholder="https://" maxlength="1000">
   </label>
 
-  <p class="notice">Submissions are sent directly to our WordPress editorial pending queue for review prior to publication.</p>
+  <label>Contact email (editor only)
+    <input name="email" type="email" required maxlength="200">
+  </label>
 
-  <button type="submit" class="btn primary" id="story-submit-btn">Send to editorial queue ↗</button>
+  <label class="honeypot" aria-hidden="true">Leave blank
+    <input name="website" tabindex="-1" autocomplete="off">
+  </label>
+
+  <label>
+    <input name="consent" type="checkbox" required>I have permission to submit this information for review.
+  </label>
+
+  <div class="notice">Submissions are stored privately until editorial approval. Contact email is never published.</div>
+
+  <button type="submit" class="primary" id="story-submit-btn">Submit for review ↗</button>
 </form>
 <!-- /wp:html -->

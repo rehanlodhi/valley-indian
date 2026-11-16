@@ -20,8 +20,8 @@
     {
       "step": "setSiteOptions",
       "options": {
-        "blogname": "The Valley Indian",
-        "blogdescription": "OUR COMMUNITY. OUR STORIES. OUR VALLEY.",
+        "blogname": "Vegas Indian Pulse",
+        "blogdescription": "Indian roots. Vegas spirit.",
         "permalink_structure": "/%postname%/",
         "show_on_front": "posts"
       }

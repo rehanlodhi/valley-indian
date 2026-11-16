@@ -1,27 +1,57 @@
 // =============================================================================
-// Newsletter Component ("The Valley Brief")
+// Newsletter Sidebar Callout ("The Pulse Weekly")
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 
 .newsletter {
-  padding: 26px;
-  background: var(--ink);
-  color: white;
+  padding: 28px;
+  background: var(--dark);
+  color: var(--cream);
+  border-top: 4px solid var(--gold);
+  border-radius: 6px;
 
-  p {
-    font-size: 13px;
+  .eyebrow {
+    color: var(--gold);
   }
 
-  input {
-    background: #fff;
+  h2 {
+    color: var(--cream);
+    margin: 0 0 16px;
+    line-height: 1.15;
+  }
+
+  p {
+    color: v.$color-dark-muted;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 10px 0 20px;
+  }
+
+  label {
+    color: var(--cream);
+    font-size: 14px;
+    margin: 14px 0 5px;
+    font-weight: 600;
+  }
+
+  input[type="email"],
+  input[type="text"] {
+    background: #ffffff;
     color: var(--ink);
   }
 
   button,
+  .button,
   .btn {
-    background: #e5b876;
-    border: 0;
     width: 100%;
+    margin-top: 10px;
+    line-height: 1.6;
+  }
+
+  small {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
   }
 }

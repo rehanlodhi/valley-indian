@@ -1,39 +1,76 @@
 // =============================================================================
-// Form Controls & Search Components
+// Form Controls, Search & Filter Inputs
 // =============================================================================
 
 @use "../abstracts/variables" as v;
 @use "../abstracts/mixins" as m;
 
 input,
-textarea,
-select {
+select,
+textarea {
   width: 100%;
-  border: 1px solid #bdc8bd;
-  background: #fffef9;
-  padding: 11px;
-  border-radius: 3px;
-  margin: 5px 0 13px;
+  padding: 12px;
+  background: #ffffff;
   color: var(--ink);
+  border: 1px solid var(--input-border);
+  border-radius: v.$radius-input;
+  min-width: 0;
 }
 
 textarea {
-  min-height: 100px;
+  min-height: 110px;
+  resize: vertical;
 }
 
 label {
   display: block;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 14px;
+  margin: 14px 0 5px;
+  font-weight: 600;
+
+  input,
+  select,
+  textarea {
+    margin-top: 6px;
+  }
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  margin-right: 8px;
+  padding: 0;
+}
+
+input[type="submit"],
+.wp-block-post-comments-form input[type="submit"].wp-element-button,
+.comment-respond .form-submit input[type="submit"] {
+  width: auto;
+  cursor: pointer;
+  border: 1px solid var(--teal);
+  background: var(--teal);
+  color: #ffffff;
+  padding: 10px 17px;
+  border-radius: v.$radius-base;
+  font-weight: 600;
+  line-height: 1.6;
+
+  &:hover {
+    background: #00665d;
+    border-color: #00665d;
+    color: #ffffff;
+  }
 }
 
 .form {
-  max-width: 680px;
+  max-width: v.$form-max-width;
 }
 
 .searchrow {
   display: flex;
-  gap: 14px;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
 
   input {
     flex: 2;
@@ -44,6 +81,6 @@ label {
   }
 
   @include m.mobile {
-    display: block;
+    flex-direction: column;
   }
 }
