@@ -5,14 +5,6 @@
 
 ---
 
-## ⚡ Live Demo (WordPress Playground)
-
-Launch the theme in an instant in-browser WordPress environment:
-
-👉 **[Open Live Demo in WordPress Playground](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/rehanlodhi/valley-indian/main/blueprint.json)**
-
----
-
 ## 📁 Theme Structure
 
 ```
@@ -32,8 +24,7 @@ valley-indian/
 ├── templates/                 # FSE block templates (front-page, page, single, archive)
 ├── functions.php              # Theme setup, asset enqueue, query & block enhancements
 ├── style.css                  # Compiled WordPress stylesheet
-├── theme.json                 # FSE color palette, typography, and layout presets
-└── blueprint.json             # WordPress Playground configuration
+└── theme.json                 # FSE color palette, typography, and layout presets
 ```
 
 ---
